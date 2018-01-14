@@ -6,8 +6,9 @@ Following are my notes on getting a v1.0 RadioShark and a 808 Bluetooth speaker 
 ## Steps
 
 1) Install various packages via:
-
+```c
     apg-get install pulseaudio pulseaudio-module-bluetooth bluez bluez-firmware mplayer
+```
 
 2) Add root to the pulse permissions
 
