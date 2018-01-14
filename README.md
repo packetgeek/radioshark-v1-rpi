@@ -220,7 +220,7 @@ mplayer -ao pulse a.mp3
 ```c
 pactl list |more
 ```
-Make note of the index number for the source and sink that you want to use (for me it was source=0 and sink=1
+Make note of the index number for the source and sink that you want to use (for me it was source=0 and sink=1)
 
 13) set the proper source and sink
 ```c
