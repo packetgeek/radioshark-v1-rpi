@@ -32,32 +32,57 @@ custom=custom
 ```
 The above is needed because the compiler see that those two variables are declared but never used.
 
-6) Build and install the binary via:
+6) Install the development package for libusb
+```c
+apt-get install libusb-dev
+```
+
+7) Run configure
 ```c
 ./configure
+```
+The tail end of the output should look something like:
+```c
+.-------------------------------------------------
+| Configuration to be used:
+|
+|   CPP     : gcc -E
+|   CPPFLAGS: -DNDEBUG
+|   CC      : gcc
+|   CFLAGS  : -O2 -Wall -W -Werror
+|   CXX     : g++
+|   CXXFLAGS: -O2 -Wall -W -Werror
+|   LD      : /usr/bin/ld
+|   LDFLAGS : -L/usr/lib/arm-linux-gnueabihf -lusb
+`--------------------------------------------------
+```
+If the last line is only "LDFLAGS: " (with nothing following it), you've likely missed something.
+
+8) Build and install the binary via:
+```c
 make
 make install
 ```
 
-7) Cd back to home and get the shark code:
+9) Cd back to home and get the shark code:
 ```c
 cd
 wget http://www.productivity.org/projects/shark/download/shark-1.0.tar
 ```
 
-8) Untar the shark tarball and cd into it:
+10) Untar the shark tarball and cd into it:
 ```c
 tar xvf shark-1.0.tar
 cd shark-1.0
 ```
 
-9) Using your favorite editor, edit the Makefile and cause the line after the "shark:" tag to look like:
+11) Using your favorite editor, edit the Makefile and cause the line after the "shark:" tag to look like:
 ```c
 shark:
         ${CC} -L/usr/local/lib/ -lusb -lhid -o shark shark.c
 ```
 
-10) Build and install the shark binary by running:
+12) Build and install the shark binary by running:
 ```c
 make
 make install
@@ -68,6 +93,9 @@ make install
 /usr/local/bin/shark -red 1
 /usr/local/bin/shark -red 0
 ```
+
+If the above complains about not being able to find libhid.so.0, run "ldconfig".
+
 The above should cause the red LEDs in the RadioShark to come on and go off.
 
 ## Connecting the 808 Bluetooth speaker to the Raspberry Pi 3
@@ -83,6 +111,7 @@ apt-get install pulseaudio pulseaudio-module-bluetooth bluez bluez-firmware mpla
 ```c
 adduser root pulse-access
 ```
+Note: if you're intending to include Node-Red controls for shark, be sure to figure out which user the binary runs as and also run "adduser" for that user.
 
 3) Create /etc/dbus-1/systemd/pulseaudio-bluetooth.conf so that it contains:
 ```c
@@ -130,8 +159,11 @@ Note: you can check to see if it's running via:
 ```c
 systemctl status bluetooth
 ```
+Note: Ignore the complaints about the SAP driver and server.
 
-8) Pair up the speaker by running:
+8) Reboot your system and log back in as root
+
+9) Pair up the speaker by running:
 ```c
 bluetoothctl
 power on
@@ -139,7 +171,6 @@ agent on
 default-agent
 scan on
 ```
-
 Note: Pause at this point, until the MAC address for "[808]" shows up, then run the following:
 ```c
 pair MAC_ADDRESS
@@ -148,14 +179,37 @@ connect MAC_ADDRESS
 scan off
 exit
 ```
-
-9) Reboot your system
+Output from the connect instruction should look like:
+```c
+[bluetooth]# connect FC:58:FA:B8:C4:B4
+Attempting to connect to FC:58:FA:B8:C4:B4
+[CHG] Device FC:58:FA:B8:C4:B4 Connected: yes
+Connection successful
+[CHG] Device FC:58:FA:B8:C4:B4 UUIDs:
+	00001101-0000-1000-8000-00805f9b34fb
+	00001108-0000-1000-8000-00805f9b34fb
+	0000110b-0000-1000-8000-00805f9b34fb
+	0000110c-0000-1000-8000-00805f9b34fb
+	0000110e-0000-1000-8000-00805f9b34fb
+	0000111e-0000-1000-8000-00805f9b34fb
+```
 
 10) Run the following
 ```c
 pactl list short|grep bluez
 ```
-The output should look something like what's starting on line 201 at: https://github.com/davidedg/NAS-mod-config/blob/master/bt-sound/bt-sound-Bluez5_PulseAudio5.txt
+The output should look something like what's starting on line 201 at: https://github.com/davidedg/NAS-mod-config/blob/master/bt-sound/bt-sound-Bluez5_PulseAudio5.txt  On mine, it looks like:
+```c
+root@snipsbox:~# pactl list short|grep bluez
+X11 connection rejected because of wrong authentication.
+xcb_connection_has_error() returned true
+12	module-bluez5-discover		
+13	module-bluez4-discover		
+14	module-bluez5-device	path=/org/bluez/hci0/dev_FC_58_FA_B8_C4_B4	
+1	bluez_sink.FC_58_FA_B8_C4_B4	module-bluez5-device.c	s16le 2ch 44100Hz	SUSPENDED
+2	bluez_sink.FC_58_FA_B8_C4_B4.monitor	module-bluez5-device.c	s16le 2ch 44100Hz	SUSPENDED
+2	bluez_card.FC_58_FA_B8_C4_B4	module-bluez5-device.c
+```
 
 11) Test the config by running:
 ```c
