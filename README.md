@@ -33,7 +33,42 @@ custom=custom
 ```
 The above is needed because the compiler see that those two variables are declared but never used.
 
-6) 
+6) Build and install the binary via:
+```c
+make
+make install
+```
+
+7) Cd back to home and get the shark code:
+```c
+cd
+wget http://www.productivity.org/projects/shark/download/shark-1.0.tar
+```
+
+8) Untar the shark tarball and cd into it:
+```c
+tar xvf shark-1.0.tar
+cd shark-1.0
+```
+
+9) Using your favorite editor, edit the Makefile and cause the line after the "shark:" tag to look like:
+```c
+shark:
+        ${CC} -L/usr/local/lib/ -lusb -lhid -o shark shark.c
+```
+
+10) Build and install the shark binary by running:
+```c
+make
+make install
+```
+
+11) Plug in your RadioShark and run the following:
+```c
+/usr/local/bin/shark -red 1
+/usr/local/bin/shark -red 0
+```
+The above should cause the red LEDs in the RadioShark to come on and go off.
 
 ## Connecting the 808 Bluetooth speaker to the Raspberry Pi 3
 
@@ -164,6 +199,7 @@ resample-method = trivial
 
 * The libhid repair: https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=21932
 * The older libhid code: http://sources.openelec.tv/mirror/libhid/
+* The shark code: http://www.productivity.org/projects/shark/
 * Richard MacCutchan's hint for fixing the shark.c Makefile: https://www.codeproject.com/Questions/529381/GetplusUSBplusdeviceplusinformationplususingplusli
 * hints for setting up Bluetooth: https://github.com/davidedg/NAS-mod-config/blob/master/bt-sound/bt-sound-Bluez5_PulseAudio5.txt
 * hints for determine which sink and source: https://www.raspberrypi.org/forums/viewtopic.php?f=91&t=88418
@@ -171,3 +207,4 @@ resample-method = trivial
 ## Other points of interest
 
 * Code for RadioShark v2: http://hoop.euqset.org/archives/2015_11.html
+* variant with DEBUG: https://github.com/cmhdave/shark/
