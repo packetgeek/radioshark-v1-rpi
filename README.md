@@ -254,9 +254,14 @@ resample-method = trivial
 ```c
 # Enable audio (loads snd_bcm2835)
 #dtparam=audio=on
-dwc_otg.fiq_fsm_mask=0x5
+dwc_otg.fiq_fsm_mask=0xf
 ```
-Note: other recommendations include setting the value to 0x7, 0xd, or 0xf.  0x5 appears to work for me.
+Note: other recommendations include setting the value to 0x5, 0x7, or 0xd.  0xf appears to work for me.
+
+***Update*** Making the above change (in the long run) had little effect.  I was more successful with adding the following to /etc/pulse/daemon.pa:
+```c
+default-sample-rate=32000
+```
 
 Note: you must reboot the RPi once you've made this change.
 
