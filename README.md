@@ -249,6 +249,17 @@ pactl list sinks|perl -000ne 'if(/#1/){/(Volume:.*)/;print "$1\n"}'
 ```c
 resample-method = trivial
 ```
+
+2) I've experience periodic failures (where nothing goes to the Bluetooth audio).  The Interwebs recommended editing the tail end of /boot/config.txt and making it look like the below. I appears to work.  Will provide updated status later.
+```c
+# Enable audio (loads snd_bcm2835)
+#dtparam=audio=on
+dwc_otg.fiq_fsm_mask=0x5
+```
+Note: other recommendations include setting the value to 0x7, 0xd, or 0xf.  0x5 appears to work for me.
+
+Note: you must reboot the RPi once you've made this change.
+
 ## Sources
 
 * The libhid repair: https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=21932
