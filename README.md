@@ -3,7 +3,41 @@ RadioShark v1 on the Raspberry Pi 3
 
 Following are my notes on getting a v1.0 RadioShark and a 808 Bluetooth speaker working on a Raspberry Pi 3, running 2017-11-19-raspbian-stretch-lite.  Installation of the OS is considered outside of the scope of these notes.  Following steps are performed as root, unless otherwise noted.
 
-## Steps
+## Installing libhid
+
+### Steps
+
+1) Find a copy of the older libhid.  I'd searched Google and found a copy at:
+http://sources.openelec.tv/mirror/libhid/
+
+2) Download the libhid code
+```c
+wget http://sources.openelec.tv/mirror/libhid/libhid-0.2.16.tar.gz
+```
+
+3) Untar the libhid tarball and cd into it
+```c
+tar xvfz libhid0.2.16.tar.gz
+cd libhid-0.2.16
+```
+
+4) edit test/lshid.c and comment out line 41 so that it looks like:
+```c
+//len = *((unsigned long*)custom);
+```
+
+5) Immediately after the above line, add:
+```c
+len=len;
+custom=custom
+```
+The above is needed because the compiler see that those two variables are declared but never used.
+
+6) 
+
+## Connecting the 808 Bluetooth speaker to the Raspberry Pi 3
+
+### Steps
 
 1) Install various packages via:
 ```c
@@ -126,3 +160,14 @@ pactl list sinks|perl -000ne 'if(/#1/){/(Volume:.*)/;print "$1\n"}'
 ```c
 resample-method = trivial
 ```
+## Sources
+
+* The libhid repair: https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=21932
+* The older libhid code: http://sources.openelec.tv/mirror/libhid/
+* Richard MacCutchan's hint for fixing the shark.c Makefile: https://www.codeproject.com/Questions/529381/GetplusUSBplusdeviceplusinformationplususingplusli
+* hints for setting up Bluetooth: https://github.com/davidedg/NAS-mod-config/blob/master/bt-sound/bt-sound-Bluez5_PulseAudio5.txt
+* hints for determine which sink and source: https://www.raspberrypi.org/forums/viewtopic.php?f=91&t=88418
+
+## Other points of interest
+
+* Code for RadioShark v2: http://hoop.euqset.org/archives/2015_11.html
