@@ -30,7 +30,7 @@ cd libhid-0.2.16
 len=len;
 custom=custom
 ```
-The above is needed because the compiler see that those two variables are declared but never used.
+***Note:*** The above is needed because the compiler see that those two variables are declared but never used.
 
 6) Install the development package for libusb
 ```c
@@ -56,7 +56,7 @@ The tail end of the output should look something like:
 |   LDFLAGS : -L/usr/lib/arm-linux-gnueabihf -lusb
 `--------------------------------------------------
 ```
-If the last line is only "LDFLAGS: " (with nothing following it), you've likely missed something.
+***Note:*** If the last line is only "LDFLAGS: " (with nothing following it), you've likely missed something.
 
 8) Build and install the binary via:
 ```c
@@ -94,9 +94,9 @@ make install
 /usr/local/bin/shark -red 0
 ```
 
-If the above complains about not being able to find libhid.so.0, run "ldconfig".
-
 The above should cause the red LEDs in the RadioShark to come on and go off.
+
+***Note:*** If the above complains about not being able to find libhid.so.0, run "ldconfig".
 
 ## Connecting the 808 Bluetooth speaker to the Raspberry Pi 3
 
@@ -111,7 +111,7 @@ apt-get install pulseaudio pulseaudio-module-bluetooth bluez bluez-firmware mpla
 ```c
 adduser root pulse-access
 ```
-Note: if you're intending to include Node-Red controls for shark, be sure to figure out which user the binary runs as and also run "adduser" for that user.
+***Note:*** if you're intending to include Node-Red controls for shark, be sure to figure out which user the binary runs as and also run "adduser" for that user.
 
 3) Create /etc/dbus-1/systemd/pulseaudio-bluetooth.conf so that it contains:
 ```c
@@ -155,11 +155,11 @@ systemctl enable pulseaudio.service
 ```c
 systemctl restart bluetooth
 ```
-Note: you can check to see if it's running via:
+***Note:*** you can check to see if it's running via:
 ```c
 systemctl status bluetooth
 ```
-Note: Ignore the complaints about the SAP driver and server.
+***Note:*** Ignore the complaints about the SAP driver and server.
 
 8) Reboot your system and log back in as root
 
@@ -171,7 +171,7 @@ agent on
 default-agent
 scan on
 ```
-Note: Pause at this point, until the MAC address for "[808]" shows up, then run the following:
+***Note:*** Pause at this point, until the MAC address for "[808]" shows up, then run the following:
 ```c
 pair MAC_ADDRESS
 trust MAC_ADDRESS
@@ -256,14 +256,14 @@ resample-method = trivial
 #dtparam=audio=on
 dwc_otg.fiq_fsm_mask=0xf
 ```
-Note: other recommendations include setting the value to 0x5, 0x7, or 0xd.  0xf appears to work for me.
+***Note:*** other recommendations include setting the value to 0x5, 0x7, or 0xd.  0xf appears to work for me.
 
-***Update*** Making the above change (in the long run) had little effect.  I was more successful with adding the following to /etc/pulse/daemon.pa:
+***Update:*** Making the above change (in the long run) had little effect.  I was more successful with adding the following to /etc/pulse/daemon.pa:
 ```c
 default-sample-rate=32000
 ```
 
-Note: you must reboot the RPi once you've made this change.
+***Note:*** you must reboot the RPi once you've made this change.
 
 ## Sources
 
@@ -277,4 +277,3 @@ Note: you must reboot the RPi once you've made this change.
 ## Other points of interest
 
 * Code for RadioShark v2: http://hoop.euqset.org/archives/2015_11.html
-
