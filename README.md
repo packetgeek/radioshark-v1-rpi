@@ -34,6 +34,7 @@ The above is needed because the compiler see that those two variables are declar
 
 6) Build and install the binary via:
 ```c
+./configure
 make
 make install
 ```
