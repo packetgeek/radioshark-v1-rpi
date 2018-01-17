@@ -250,7 +250,7 @@ pactl list sinks|perl -000ne 'if(/#1/){/(Volume:.*)/;print "$1\n"}'
 resample-method = trivial
 ```
 
-2) I've experience periodic failures (where nothing goes to the Bluetooth audio).  <strike>Also, the kernel log was full of "FIQ reported NYET" errors.  The Interwebs recommended editing the tail end of /boot/config.txt and making it look like the below. It appears to work.  Will provide updated status later.<strike>
+2) I've experience periodic failures (where nothing goes to the Bluetooth audio).  <strike>Also, the kernel log was full of "FIQ reported NYET" errors.  The Interwebs recommended editing the tail end of /boot/config.txt and making it look like the below. It appears to work.  Will provide updated status later.
 ```c
 # Enable audio (loads snd_bcm2835)
 #dtparam=audio=on
@@ -260,7 +260,7 @@ dwc_otg.fiq_fsm_mask=0xf
 
 ***Note:*** you must reboot the RPi once you've made this change.</strike>
 
-***Update:*** Making the above change (in the long run) had little effect.  I was more successful with adding the following to /etc/pulse/daemon.pa:
+***Update:*** Making the above change (in the long run) had little effect.  I was more successful with adjusting the sample rate in /etc/pulse/daemon.pa.  I changed it from 44100 to 32000.  The line should look like:
 ```c
 default-sample-rate=32000
 ```
