@@ -1,4 +1,4 @@
-# radioshark-v1-rpi3
+# Connecting a RadioShark v1 to a Raspberry Pi 3 and a Bluetooth Speaker
 
 Following are my notes on getting a v1.0 RadioShark and a 808 Bluetooth speaker working on a Raspberry Pi 3, running 2017-11-19-raspbian-stretch-lite.  Installation of the OS is considered outside of the scope of these notes.  Following steps are performed as root, unless otherwise noted.
 
