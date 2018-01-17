@@ -256,8 +256,8 @@ resample-method = trivial
 #dtparam=audio=on
 dwc_otg.fiq_fsm_mask=0xf
 ```
-***Note:*** other recommendations include setting the value to 0x5, 0x7, or 0xd.  0xf appears to work for me.
-</strike>
+***Note:*** other recommendations include setting the value to 0x5, 0x7, or 0xd.  0xf appears to work for me.</strike>
+
 ***Update:*** Making the above change (in the long run) had little effect.  I was more successful with adding the following to /etc/pulse/daemon.pa:
 ```c
 default-sample-rate=32000
