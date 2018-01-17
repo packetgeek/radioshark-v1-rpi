@@ -260,11 +260,11 @@ dwc_otg.fiq_fsm_mask=0xf
 
 ***Note:*** you must reboot the RPi once you've made this change.</strike>
 
-***Update:*** Making the above change (in the long run) had little effect.  I was more successful with adjusting the sample rate in /etc/pulse/daemon.pa.  I changed it from 44100 to 32000.  The line should look like:
+***Update (16 Jan 2018):*** Making the above change (in the long run) had little effect.  I was more successful with adjusting the sample rate in /etc/pulse/daemon.pa.  I changed it from 44100 to 32000.  The line should look like:
 ```c
 default-sample-rate=32000
 ```
-The above appears to fix both the "FIQ reported NYET" errors and the periodic crashing of the audio.  As of this update (16 Jan 2018), the radio has been playing for a little over 2 days, with an average load of about 0.20 (Node-Red and LMS are also running on that same RPi).
+The above appears to fix both the "FIQ reported NYET" errors and the periodic crashing of the audio.  As of this update, the radio has been playing for a little over 2 days, with an average load of about 0.20.  Node-Red and LMS are also running on the same RPi.
 
 ## Sources
 
