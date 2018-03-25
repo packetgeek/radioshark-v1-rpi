@@ -113,7 +113,7 @@ adduser root pulse-access
 ```
 ***Note:*** if you're intending to include Node-Red controls for shark, be sure to figure out which user the binary runs as and also run "adduser" for that user.
 
-3) Create /etc/dbus-1/systemd/pulseaudio-bluetooth.conf so that it contains:
+3) Create /etc/dbus-1/system.d/pulseaudio-bluetooth.conf so that it contains:
 ```c
 <busconfig>
   <policy user="pulse">
